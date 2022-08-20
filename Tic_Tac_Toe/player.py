@@ -16,7 +16,8 @@ class RandomComputerPlayer(Player):
         super().__init__(letter)
 
     def get_move(self, game):
-        pass
+        square = random.choice(game.available_moves())
+        return square
 
 
 class HumanPlayer(Player):
@@ -24,4 +25,20 @@ class HumanPlayer(Player):
         super().__init__(letter)
 
     def get_move(self, game):
-        pass
+        valid_square = False
+        val = None
+        while not valid_square:
+            square = input(self.letter + '\'s turn. Input move (0-9):')
+            # test for valid input
+            # 1. check if the integer is valid
+            # 2. check that the val is
+            try:
+                val = int(square)
+                if val not in game.available_moves():
+                    raise ValueError
+                valid_square = True
+
+            except ValueError:
+                print('Invalid square. Try again.')
+
+        return val
